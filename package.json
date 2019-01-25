@@ -1,11 +1,11 @@
 {
   "name": "step_explain",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Converting StepShot HTML to Dr.Explain compatible format in HTML.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/merqlove/stepshot_explain.git"
+    "url": "git+https://github.com/merqlove/step_explain.git"
   },
   "keywords": [
     "npm",
@@ -30,9 +30,9 @@
     "ncp": "^2.0.0"
   },
   "bugs": {
-    "url": "https://github.com/merqlove/stepshot_explain/issues"
+    "url": "https://github.com/merqlove/step_explain/issues"
   },
-  "homepage": "https://github.com/merqlove/stepshot_explain#readme",
+  "homepage": "https://github.com/merqlove/step_explain#readme",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
