@@ -13,6 +13,8 @@ const DefaultOpts = {
   template: `${__dirname}/../templates/simple.html`,
   source: null,
   dest: null,
+  destTitle: null,
+  headerNumber: 1,
   destFolder: 'DrExplain',
 };
 
@@ -85,7 +87,8 @@ function Renderer(opts, data, i, cb) {
 
     if (data.header === true) {
       const newOpts = opts;
-      newOpts.destTitle = `${newOpts.dest}/${data.title}`;
+      newOpts.destTitle = `${newOpts.dest}/${newOpts.headerNumber}. ${data.title}`;
+      newOpts.headerNumber += 1;
       if (!existsSync(newOpts.destTitle)) {
         mkdirSync(newOpts.destTitle);
         cb(newOpts);
