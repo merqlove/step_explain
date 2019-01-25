@@ -43,7 +43,11 @@ function MkDirDest(dest, folder) {
 }
 
 function CopyDirectories(source, dest) {
-  const sourceDir = dirname(source);
+  let sourceDir = dirname(source);
+
+  if (!isDirectory(source)) {
+    sourceDir = source;
+  }
 
   getDirectories(sourceDir).forEach((dir) => {
     ncp(`${sourceDir}/${dir}`, `${dest}/${dir}`, (err) => {
