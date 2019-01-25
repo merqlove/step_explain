@@ -137,8 +137,6 @@ function ConvertStepShot(userOpts) {
 
   opts.dest = MkDirDest(opts.dest, opts.destFolder);
 
-  console.log(opts);
-
   CopyDirectories(opts.source, opts.dest);
   Worker(opts);
 
