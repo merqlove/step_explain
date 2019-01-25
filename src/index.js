@@ -43,11 +43,7 @@ function MkDirDest(dest, folder) {
 }
 
 function CopyDirectories(source, dest) {
-  let sourceDir = dirname(source);
-
-  if (!isDirectory(source)) {
-    sourceDir = source;
-  }
+  const sourceDir = dirname(source);
 
   getDirectories(sourceDir).forEach((dir) => {
     ncp(`${sourceDir}/${dir}`, `${dest}/${dir}`, (err) => {
@@ -133,6 +129,10 @@ function ConvertStepShot(userOpts) {
 
   if (!existsSync(opts.source)) {
     return null;
+  }
+
+  if (isDirectory(opts.source)) {
+    opts.source = `${opts.source}/index.html`;
   }
 
   opts.dest = MkDirDest(opts.dest, opts.destFolder);
