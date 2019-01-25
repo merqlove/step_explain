@@ -1,6 +1,6 @@
 {
   "name": "step_explain",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Converting StepShot HTML to Dr.Explain compatible format in HTML.",
   "main": "index.js",
   "repository": {
