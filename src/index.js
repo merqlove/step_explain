@@ -63,33 +63,46 @@ function StepData(step) {
   let data;
 
   if (NotNullEmpty(secondChildren)) {
-    data = { content: '', title: secondChildren.innerHTML };
+    const isHeader = secondChildren.className.indexOf('section-heading') > -1;
+    data = { content: '', title: secondChildren.innerHTML, header: isHeader};
   } else {
     let title;
     if (firstChildren.nodeName === 'H3') {
       title = firstChildren.innerHTML;
       step.removeChild(firstChildren);
     }
-    data = { content: step.innerHTML, title };
+    data = { content: step.innerHTML, title, header: false };
   }
 
   return data;
 }
 
-function Renderer(opts, data, i) {
+function Renderer(opts, data, i, cb) {
   renderFile(opts.template, data, {}, (err2, str) => {
     if (err2 !== null) {
-      return;
+      cb(null);
     }
 
-    const fileName = `page_${i + 1}.html`;
-    writeFile(`${opts.dest}/${fileName}`, str, (err3) => {
-      if (err3) {
-        return console.log(err3);
+    if (data.header === true) {
+      const newOpts = opts;
+      newOpts.destTitle = `${newOpts.dest}/${data.title}`;
+      if (!existsSync(newOpts.destTitle)) {
+        mkdirSync(newOpts.destTitle);
+        cb(newOpts.destTitle);
       }
+    } else {
+      const index = (i < 10) ? `0${i + 1}` : i + 1;
+      const fileName = `page_${index}.html`;
+      const basePath = NotNullEmpty(opts.destTitle) ? opts.destTitle : opts.dest;
+      writeFile(`${basePath}/${fileName}`, str, (err3) => {
+        if (err3) {
+          console.log(err3);
+          cb(null);
+        }
 
-      return null;
-    });
+        return cb(null);
+      });
+    }
   });
 }
 
@@ -101,11 +114,16 @@ function Worker(opts) {
 
     const dom = new JSDOM(contents);
     const steps = dom.window.document.querySelectorAll('.step');
+    let newOpts = opts;
 
     steps.forEach((step, i) => {
       const data = StepData(step);
 
-      Renderer(opts, data, i);
+      Renderer(newOpts, data, i, (updatedOpts) => {
+        if (NotNull(updatedOpts)) {
+          newOpts = updatedOpts;
+        }
+      });
     });
   });
 }
