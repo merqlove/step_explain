@@ -66,11 +66,15 @@ function StepData(step) {
 
   if (NotNullEmpty(secondChildren)) {
     const isHeader = secondChildren.className.indexOf('section-heading') > -1;
-    data = { content: '', title: secondChildren.innerHTML, header: isHeader};
+    data = { content: '', title: secondChildren.innerHTML, header: isHeader };
   } else {
     let title;
     if (firstChildren.nodeName === 'H3') {
       title = firstChildren.innerHTML;
+      const image = step.querySelector('img');
+      if (NotNull(image)) {
+        image.src = image.src.replace('images', '../images');
+      }
       step.removeChild(firstChildren);
     }
     data = { content: step.innerHTML, title, header: false };
