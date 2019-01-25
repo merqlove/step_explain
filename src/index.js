@@ -87,9 +87,9 @@ function Renderer(opts, data, i, cb) {
 
     if (data.header === true) {
       const newOpts = opts;
-      newOpts.destTitle = `${newOpts.dest}/${newOpts.headerNumber}. ${data.title}`;
-      newOpts.headerNumber += 1;
       const index = (newOpts.headerNumber < 10) ? `0${newOpts.headerNumber}` : newOpts.headerNumber;
+      newOpts.destTitle = `${newOpts.dest}/${index}. ${data.title}`;
+      newOpts.headerNumber += 1;
       if (!existsSync(newOpts.destTitle)) {
         mkdirSync(newOpts.destTitle);
         cb(newOpts);
