@@ -88,7 +88,7 @@ function Renderer(opts, data, i, cb) {
       newOpts.destTitle = `${newOpts.dest}/${data.title}`;
       if (!existsSync(newOpts.destTitle)) {
         mkdirSync(newOpts.destTitle);
-        cb(newOpts.destTitle);
+        cb(newOpts);
       }
     } else {
       const index = (i < 10) ? `0${i + 1}` : i + 1;
